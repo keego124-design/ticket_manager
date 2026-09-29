@@ -1,0 +1,16 @@
+# Ticket Management System - Requisitos
+# ================================================================
+# Este proyecto está desarrollado utilizando 100% la biblioteca
+# estándar de Python 3.10+, por lo que NO requiere instalar paquetes
+# externos adicionales a través de pip.
+#
+# Módulos estándar utilizados:
+# - tkinter / ttk (Interfaz gráfica de usuario de escritorio)
+# - sqlite3 (Motor de base de datos relacional local)
+# - hashlib (Cifrado criptográfico seguro SHA-256 para contraseñas)
+# - datetime (Cálculo y validación de fechas límite y vencimientos)
+# - re (Expresiones regulares para validación de formato de correo)
+#
+# Para ejecutar la aplicación:
+#   py main.py   (en Windows)
+#   python3 main.py (en Linux/Mac)
