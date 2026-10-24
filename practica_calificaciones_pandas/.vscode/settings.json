@@ -1,0 +1,15 @@
+{
+    "python.defaultInterpreterPath": "C:\\Users\\CASA\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+    "files.encoding": "utf8",
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "terminal.integrated.env.windows": {
+        "PYTHONIOENCODING": "utf-8"
+    },
+    "python.analysis.typeCheckingMode": "basic",
+    "workbench.colorCustomizations": {
+        "activityBar.activeBorder": "#ff1e42",
+        "activityBarBadge.background": "#ff1e42",
+        "titleBar.activeBackground": "#070709",
+        "titleBar.activeForeground": "#ffffff"
+    }
+}
