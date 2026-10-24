@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISC CYBERPUNK // DATA ANALYTICS DASHBOARD</title>
+    <!-- Google Fonts: Orbitron & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #070709;
+            --bg-card: #0f0f14;
+            --bg-card-hover: #16161f;
+            --neon-red: #ff1e42;
+            --neon-red-glow: rgba(255, 30, 66, 0.45);
+            --neon-red-soft: rgba(255, 30, 66, 0.15);
+            --neon-coral: #ff5e7e;
+            --text-pure: #ffffff;
+            --text-muted: #a0a0b0;
+            --border-glow: #ff1e42;
+            --border-subtle: #261219;
+            --badge-risk: #ff1e42;
+            --badge-ok: #00e5a3;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-pure);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(255, 30, 66, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(255, 30, 66, 0.05) 0%, transparent 45%);
+            background-attachment: fixed;
+        }
+
+        /* HEADER & HERO */
+        header {
+            background: rgba(11, 11, 15, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 2px solid var(--neon-red);
+            box-shadow: 0 4px 25px var(--neon-red-glow);
+            padding: 1.2rem 2.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.45rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: var(--text-pure);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-title .glow-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--neon-red);
+            box-shadow: 0 0 12px var(--neon-red);
+            animation: pulse-glow 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 14px var(--neon-red); }
+            50% { opacity: 0.6; transform: scale(0.9); box-shadow: 0 0 6px var(--neon-red); }
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--neon-red-soft);
+            border: 1px solid var(--neon-red);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.75rem;
+            color: var(--text-pure);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* CONTAINER */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2.5rem 2rem 5rem;
+        }
+
+        /* HERO BANNER */
+        .hero {
+            margin-bottom: 2.5rem;
+            border-left: 4px solid var(--neon-red);
+            padding-left: 1.5rem;
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.2rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
+        }
+
+        .hero h1 span {
+            color: var(--neon-red);
+            text-shadow: 0 0 15px var(--neon-red);
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        /* KPI METRIC CARDS */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .kpi-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-top: 3px solid var(--neon-red);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--neon-red);
+            box-shadow: 0 8px 25px var(--neon-red-glow);
+        }
+
+        .kpi-title {
+            font-size: 0.8rem;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .kpi-value {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.3rem;
+            font-weight: 900;
+            color: var(--text-pure);
+            margin-bottom: 0.3rem;
+        }
+
+        .kpi-value.accent {
+            color: var(--neon-red);
+            text-shadow: 0 0 12px var(--neon-red);
+        }
+
+        .kpi-sub {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        /* SECTION TITLES */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .section-header h2 {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.4rem;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-header h2::before {
+            content: "//";
+            color: var(--neon-red);
+            font-weight: 900;
+        }
+
+        /* CHARTS SECTION */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .chart-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 1.25rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chart-card:hover {
+            border-color: var(--neon-red);
+            box-shadow: 0 0 20px var(--neon-red-glow);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 1rem;
+        }
+
+        .chart-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-pure);
+        }
+
+        .chart-tag {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.7rem;
+            background: var(--neon-red-soft);
+            color: var(--neon-red);
+            padding: 3px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--neon-red);
+        }
+
+        .chart-img-wrap {
+            background: #000000;
+            border: 1px solid #1a1a24;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .chart-img-wrap img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .chart-img-wrap:hover img {
+            transform: scale(1.02);
+        }
+
+        .chart-desc {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-top: auto;
+        }
+
+        /* INTERACTIVE FILTER & LAB PLAYGROUND */
+        .lab-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 1.8rem;
+            margin-bottom: 3.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .filter-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            margin-bottom: 1.5rem;
+            align-items: flex-end;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-width: 180px;
+            flex: 1;
+        }
+
+        .control-group label {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .control-group select, .control-group input {
+            background: #09090d;
+            border: 1px solid #331520;
+            color: var(--text-pure);
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .control-group select:focus, .control-group input:focus {
+            border-color: var(--neon-red);
+            box-shadow: 0 0 10px var(--neon-red-glow);
+        }
+
+        .btn-cyber {
+            background: var(--neon-red);
+            color: #ffffff;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 11px 22px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 0 15px var(--neon-red-glow);
+            transition: background-color 0.2s, transform 0.15s, box-shadow 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-cyber:hover {
+            background: #ff3355;
+            box-shadow: 0 0 25px var(--neon-red);
+            transform: translateY(-2px);
+        }
+
+        .btn-cyber:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--neon-red);
+            color: var(--text-pure);
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            background: var(--neon-red-soft);
+            box-shadow: 0 0 15px var(--neon-red-glow);
+        }
+
+        /* DATA TABLES */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: 6px;
+            border: 1px solid var(--border-subtle);
+            background: #09090d;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+
+        thead {
+            background: #12121a;
+            border-bottom: 2px solid var(--neon-red);
+        }
+
+        th {
+            padding: 12px 16px;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.78rem;
+            letter-spacing: 1px;
+            color: var(--text-pure);
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #1a1a24;
+            color: #dcdce6;
+        }
+
+        tbody tr:hover {
+            background-color: rgba(255, 30, 66, 0.06);
+        }
+
+        .badge-status {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-pass {
+            background: rgba(0, 229, 163, 0.15);
+            color: #00e5a3;
+            border: 1px solid #00e5a3;
+        }
+
+        .badge-risk {
+            background: var(--neon-red-soft);
+            color: var(--neon-red);
+            border: 1px solid var(--neon-red);
+            box-shadow: 0 0 8px var(--neon-red-glow);
+        }
+
+        /* EXERCISE 6 INTERPRETATION CARDS */
+        .interpret-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .interpret-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-left: 4px solid var(--neon-red);
+            padding: 1.5rem;
+            border-radius: 6px;
+        }
+
+        .interpret-num {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.8rem;
+            color: var(--neon-red);
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+
+        .interpret-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            color: #ffffff;
+        }
+
+        .interpret-body {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .interpret-highlight {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--border-subtle);
+            padding: 2rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-family: 'Orbitron', monospace;
+            letter-spacing: 1px;
+            background: #09090c;
+        }
+
+        /* MODAL PARA IMAGEN */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90vh;
+            border: 2px solid var(--neon-red);
+            box-shadow: 0 0 35px var(--neon-red-glow);
+            border-radius: 8px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 25px;
+            right: 35px;
+            color: var(--neon-red);
+            font-size: 2.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .modal-close:hover {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER DE NAVEGACIÓN -->
+    <header>
+        <div class="brand-title">
+            <div class="glow-dot"></div>
+            <span>ISC DATA ENGINE // CYBERPUNK LAB</span>
+        </div>
+        <div style="display: flex; gap: 15px; align-items: center;">
+            <button class="btn-cyber btn-secondary" onclick="regenerarDatos()" id="btnRegenerar">
+                ⚡ RE-EJECUTAR ANÁLISIS
+            </button>
+            <div class="status-pill">
+                ● PANDAS & MATPLOTLIB ONLINE
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- HERO -->
+        <div class="hero">
+            <h1>PRÁCTICA: ANÁLISIS DE CALIFICACIONES <span>ISC</span></h1>
+            <p>Monitoreo cuantitativo de rendimiento académico, agrupaciones vectorizadas y visualización de alto contraste.</p>
+        </div>
+
+        <!-- KPI METRICS -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-title">TOTAL OBSERVACIONES</div>
+                <div class="kpi-value accent" id="kpiTotal">{{ total_registros }}</div>
+                <div class="kpi-sub">24 alumnos × 4 materias × 3 unidades</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">ALUMNOS TOTALES</div>
+                <div class="kpi-value">24</div>
+                <div class="kpi-sub">12 Grupo A | 12 Grupo B</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">PROMEDIO GLOBAL</div>
+                <div class="kpi-value" id="kpiPromedio">{{ promedio_general }}</div>
+                <div class="kpi-sub">Escala académica 0 a 100 pts</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">TASA DE APROBACIÓN</div>
+                <div class="kpi-value accent" id="kpiAprobacion">{{ tasa_aprobacion }}%</div>
+                <div class="kpi-sub">{{ aprobados_count }} unidades con calif ≥ 70</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">ALUMNOS EN RIESGO (&lt;70)</div>
+                <div class="kpi-value accent" id="kpiRiesgo">{{ alumnos_riesgo_count }}</div>
+                <div class="kpi-sub">Promedio general acumulado menor a 70</div>
+            </div>
+        </div>
+
+        <!-- EJERCICIO 5: VISUALIZACIÓN DE GRÁFICOS (CYBERPUNK) -->
+        <div class="section-header">
+            <h2>EJERCICIO 5 // VISUALIZACIONES EN MATPLOTLIB (HIGH CONTRAST)</h2>
+            <span style="color: var(--text-muted); font-size: 0.85rem;">Haga clic en cualquier gráfico para expandir</span>
+        </div>
+
+        <div class="charts-grid">
+            <!-- GRÁFICO 1 -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <div class="chart-title">PROMEDIO POR MATERIA</div>
+                    <div class="chart-tag">BAR CHART</div>
+                </div>
+                <div class="chart-img-wrap" onclick="abrirModal('/static/plots/promedio_materias.png')">
+                    <img src="/static/plots/promedio_materias.png?t={{ timestamp }}" alt="Promedio de Materias" id="imgMateria">
+                </div>
+                <div class="chart-desc">
+                    Comparativa de medias por asignatura (eje Y fijado en 0–100) con línea de corte en 70 puntos.
+                </div>
+            </div>
+
+            <!-- GRÁFICO 2 -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <div class="chart-title">DISTRIBUCIÓN GENERAL</div>
+                    <div class="chart-tag">HISTOGRAM</div>
+                </div>
+                <div class="chart-img-wrap" onclick="abrirModal('/static/plots/histograma.png')">
+                    <img src="/static/plots/histograma.png?t={{ timestamp }}" alt="Histograma de Calificaciones" id="imgHistograma">
+                </div>
+                <div class="chart-desc">
+                    Histograma de frecuencias de las 288 calificaciones con línea vertical discontinua en 70 de corte aprobatorio.
+                </div>
+            </div>
+
+            <!-- GRÁFICO 3 -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <div class="chart-title">TENDENCIA POR UNIDAD</div>
+                    <div class="chart-tag">LINE PLOT</div>
+                </div>
+                <div class="chart-img-wrap" onclick="abrirModal('/static/plots/tendencia_unidades.png')">
+                    <img src="/static/plots/tendencia_unidades.png?t={{ timestamp }}" alt="Tendencia por Unidades" id="imgTendencia">
+                </div>
+                <div class="chart-desc">
+                    Trayectoria evolutiva por materia a lo largo de las Unidades 1, 2 y 3 evidenciando el comportamiento de cierre.
+                </div>
+            </div>
+        </div>
+
+        <!-- EJERCICIO 6: INTERPRETACIÓN Y CONCLUSIONES -->
+        <div class="section-header">
+            <h2>EJERCICIO 6 // INTERPRETACIÓN Y PREGUNTAS DE ANÁLISIS</h2>
+        </div>
+
+        <div class="interpret-grid">
+            <div class="interpret-card">
+                <div class="interpret-num">PREGUNTA 6.1</div>
+                <div class="interpret-title">Materia con Menor Promedio</div>
+                <div class="interpret-body">
+                    La materia con promedio más bajo es <span class="interpret-highlight">Matemáticas discretas (74.90 pts)</span>. 
+                    Esto refleja una mayor dificultad conceptual intrínseca en lógica proposicional, teoría de conjuntos y grafos.
+                </div>
+            </div>
+
+            <div class="interpret-card">
+                <div class="interpret-num">PREGUNTA 6.2</div>
+                <div class="interpret-title">Tendencia en Unidad 3</div>
+                <div class="interpret-body">
+                    Se observa una <span class="interpret-highlight">caída de 6.02 puntos</span> en la Unidad 3 (77.08 pts) en comparación con la Unidad 2 (83.10 pts). 
+                    Se atribuye a la carga acumulada de exámenes y entregas finales de proyectos.
+                </div>
+            </div>
+
+            <div class="interpret-card">
+                <div class="interpret-num">PREGUNTA 6.3</div>
+                <div class="interpret-title">Estudiantes en Riesgo (&lt; 70)</div>
+                <div class="interpret-body">
+                    Se identificaron <span class="interpret-highlight">4 estudiantes</span> en riesgo académico (16.7%): 
+                    Mateo Vargas (64.25), Santiago Gómez (62.17), Diego Ramírez (57.83) y Nicolás Paredes (57.58).
+                </div>
+            </div>
+        </div>
+
+        <!-- EJERCICIO 2 & PLAYGROUND INTERACTIVO -->
+        <div class="section-header">
+            <h2>EJERCICIO 2 // MOTOR DE FILTRADO VECTORIZADO EN TIEMPO REAL</h2>
+        </div>
+
+        <div class="lab-card">
+            <div class="filter-controls">
+                <div class="control-group">
+                    <label>Filtrar por Grupo</label>
+                    <select id="selectGrupo" onchange="aplicarFiltros()">
+                        <option value="TODOS">Todos los Grupos</option>
+                        <option value="A">Grupo A (144 registros)</option>
+                        <option value="B">Grupo B (144 registros)</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Filtrar por Materia</label>
+                    <select id="selectMateria" onchange="aplicarFiltros()">
+                        <option value="TODAS">Todas las Materias</option>
+                        <option value="Programacion">Programación</option>
+                        <option value="Bases de datos">Bases de datos</option>
+                        <option value="Redes">Redes</option>
+                        <option value="Matematicas discretas">Matemáticas discretas</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Condición de Calificación</label>
+                    <select id="selectCondicion" onchange="aplicarFiltros()">
+                        <option value="TODAS">Cualquier Calificación</option>
+                        <option value="REPROBADOS">Reprobados (&lt; 70 pts) [Ej. 2B]</option>
+                        <option value="EXCELENTES">Sobresalientes (≥ 80 pts) [Ej. 2C]</option>
+                        <option value="APROBADOS">Aprobados (≥ 70 pts)</option>
+                    </select>
+                </div>
+                <button class="btn-cyber" onclick="resetearFiltros()">
+                    REINICIAR FILTROS
+                </button>
+            </div>
+
+            <div style="margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center;">
+                <span id="filtroContador" style="font-family: 'Orbitron', monospace; font-size: 0.85rem; color: var(--neon-red);">
+                    Mostrando 288 registros coincidentes
+                </span>
+            </div>
+
+            <div class="table-responsive" style="max-height: 380px; overflow-y: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Matrícula</th>
+                            <th>Nombre del Alumno</th>
+                            <th>Grupo</th>
+                            <th>Materia</th>
+                            <th>Unidad</th>
+                            <th>Calificación</th>
+                            <th>Asistencias</th>
+                            <th>Situación</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaFiltrada">
+                        <!-- Llenado dinámico vía JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- EJERCICIO 4: TABLA DE PROMEDIOS DE ALUMNOS (promedios_alumnos.csv) -->
+        <div class="section-header">
+            <h2>EJERCICIO 4.6 // PROMEDIOS DE ALUMNOS (promedios_alumnos.csv)</h2>
+            <a href="/descargar/promedios_alumnos.csv" class="btn-cyber btn-secondary" style="font-size: 0.75rem; text-decoration: none;">
+                📥 DESCARGAR CSV
+            </a>
+        </div>
+
+        <div class="lab-card" style="padding: 1.25rem;">
+            <div style="margin-bottom: 1.2rem; display: flex; gap: 15px; align-items: center; justify-content: space-between;">
+                <input type="text" id="busquedaAlumno" placeholder="🔍 Buscar por nombre o matrícula..." 
+                       oninput="filtrarTablaAlumnos()" 
+                       style="background: #09090d; border: 1px solid #331520; color: #fff; padding: 10px 14px; border-radius: 6px; width: 340px;">
+                <span style="font-family: 'Orbitron', monospace; font-size: 0.8rem; color: var(--text-muted);">
+                    Ordenado por Promedio Descendente
+                </span>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Matrícula</th>
+                            <th>Nombre Completo</th>
+                            <th>Grupo</th>
+                            <th>Promedio Calificación</th>
+                            <th>Promedio Asistencias</th>
+                            <th>U. Aprobadas</th>
+                            <th>U. Reprobadas</th>
+                            <th>Estado Final</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaAlumnos">
+                        {% for a in alumnos %}
+                        <tr class="fila-alumno" data-nombre="{{ a.nombre|lower }}" data-mat="{{ a.matricula|lower }}">
+                            <td style="font-family: 'Orbitron', monospace;">{{ loop.index }}</td>
+                            <td style="font-family: 'Orbitron', monospace; font-weight: bold; color: var(--neon-coral);">{{ a.matricula }}</td>
+                            <td>{{ a.nombre }}</td>
+                            <td style="text-align: center;"><span class="badge-status" style="background:#181824;">{{ a.grupo }}</span></td>
+                            <td style="font-weight: 700; font-size: 1rem; color: {% if a.promedio_calificacion < 70 %}var(--neon-red){% else %}#ffffff{% endif %};">
+                                {{ a.promedio_calificacion }}
+                            </td>
+                            <td>{{ a.promedio_asistencias }} / 30</td>
+                            <td style="color: #00e5a3; font-weight: 600;">{{ a.unidades_aprobadas }}</td>
+                            <td style="color: {% if a.unidades_reprobadas > 0 %}var(--neon-red){% else %}#888{% endif %}; font-weight: 600;">
+                                {{ a.unidades_reprobadas }}
+                            </td>
+                            <td>
+                                {% if a.promedio_calificacion >= 70 %}
+                                    <span class="badge-status badge-pass">Acreditado</span>
+                                {% else %}
+                                    <span class="badge-status badge-risk">En Riesgo</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MODAL PARA ZOOM DE IMAGEN -->
+    <div class="modal" id="modalImagen" onclick="cerrarModal()">
+        <span class="modal-close">&times;</span>
+        <img class="modal-content" id="imgModal" src="" alt="Zoom">
+    </div>
+
+    <footer>
+        INGENIERÍA EN SISTEMAS COMPUTACIONALES // ANÁLISIS DE DATOS CON PANDAS & MATPLOTLIB &copy; 2026
+    </footer>
+
+    <!-- JAVASCRIPT DINÁMICO -->
+    <script>
+        let datosCompletos = [];
+
+        // Cargar datos JSON al iniciar
+        async function inicializar() {
+            try {
+                const res = await fetch('/api/datos');
+                datosCompletos = await res.json();
+                renderizarTablaFiltrada(datosCompletos);
+            } catch (e) {
+                console.error("Error cargando datos:", e);
+            }
+        }
+
+        function renderizarTablaFiltrada(filas) {
+            const tbody = document.getElementById('tablaFiltrada');
+            const contador = document.getElementById('filtroContador');
+            tbody.innerHTML = '';
+            contador.innerText = `Mostrando ${filas.length} registro(s) coincidentes`;
+
+            filas.forEach(f => {
+                const tr = document.createElement('tr');
+                const badge = f.calificacion >= 70 
+                    ? `<span class="badge-status badge-pass">Aprobado</span>`
+                    : `<span class="badge-status badge-risk">Reprobado</span>`;
+                
+                tr.innerHTML = `
+                    <td style="font-family: 'Orbitron', monospace; color: var(--neon-coral);">${f.matricula}</td>
+                    <td>${f.nombre}</td>
+                    <td style="text-align: center;">${f.grupo}</td>
+                    <td>${f.materia}</td>
+                    <td style="text-align: center;">U${f.unidad}</td>
+                    <td style="font-weight: 700; color: ${f.calificacion < 70 ? 'var(--neon-red)' : '#ffffff'};">${f.calificacion}</td>
+                    <td>${f.asistencias}</td>
+                    <td>${badge}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function aplicarFiltros() {
+            const grupo = document.getElementById('selectGrupo').value;
+            const materia = document.getElementById('selectMateria').value;
+            const condicion = document.getElementById('selectCondicion').value;
+
+            const filtrados = datosCompletos.filter(d => {
+                if (grupo !== 'TODOS' && d.grupo !== grupo) return false;
+                if (materia !== 'TODAS' && d.materia !== materia) return false;
+                if (condicion === 'REPROBADOS' && d.calificacion >= 70) return false;
+                if (condicion === 'EXCELENTES' && d.calificacion < 80) return false;
+                if (condicion === 'APROBADOS' && d.calificacion < 70) return false;
+                return true;
+            });
+
+            renderizarTablaFiltrada(filtrados);
+        }
+
+        function resetearFiltros() {
+            document.getElementById('selectGrupo').value = 'TODOS';
+            document.getElementById('selectMateria').value = 'TODAS';
+            document.getElementById('selectCondicion').value = 'TODAS';
+            renderizarTablaFiltrada(datosCompletos);
+        }
+
+        function filtrarTablaAlumnos() {
+            const q = document.getElementById('busquedaAlumno').value.toLowerCase().trim();
+            const filas = document.querySelectorAll('.fila-alumno');
+            filas.forEach(f => {
+                const nombre = f.getAttribute('data-nombre');
+                const mat = f.getAttribute('data-mat');
+                if (nombre.includes(q) || mat.includes(q)) {
+                    f.style.display = '';
+                } else {
+                    f.style.display = 'none';
+                }
+            });
+        }
+
+        // Modal de imágenes
+        function abrirModal(src) {
+            document.getElementById('imgModal').src = src;
+            document.getElementById('modalImagen').classList.add('active');
+        }
+
+        function cerrarModal() {
+            document.getElementById('modalImagen').classList.remove('active');
+        }
+
+        // Re-ejecutar análisis en caliente
+        async function regenerarDatos() {
+            const btn = document.getElementById('btnRegenerar');
+            btn.innerText = "⏳ RE-PROCESANDO...";
+            btn.disabled = true;
+
+            try {
+                const res = await fetch('/api/regenerar', { method: 'POST' });
+                const data = await res.json();
+                if (data.status === 'ok') {
+                    // Refrescar imágenes con timestamp anti-caché
+                    const t = new Date().getTime();
+                    document.getElementById('imgMateria').src = `/static/plots/promedio_materias.png?t=${t}`;
+                    document.getElementById('imgHistograma').src = `/static/plots/histograma.png?t=${t}`;
+                    document.getElementById('imgTendencia').src = `/static/plots/tendencia_unidades.png?t=${t}`;
+                    
+                    // Recargar datos y tabla
+                    await inicializar();
+                    alert("¡Análisis re-ejecutado y gráficos actualizados exitosamente!");
+                }
+            } catch (err) {
+                alert("Error al regenerar: " + err);
+            } finally {
+                btn.innerText = "⚡ RE-EJECUTAR ANÁLISIS";
+                btn.disabled = false;
+            }
+        }
+
+        window.onload = inicializar;
+    </script>
+</body>
+</html>

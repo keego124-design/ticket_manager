@@ -40,3 +40,8 @@ env/
 .idea/
 *.swp
 *.swo
+
+# Binary installers
+*.exe
+*.msi
+
