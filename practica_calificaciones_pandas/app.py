@@ -100,6 +100,18 @@ def descargar_promedios():
     return send_file(ruta, as_attachment=True, download_name="promedios_alumnos.csv")
 
 
+@app.route("/descargar/practica_pandas.ipynb")
+def descargar_notebook():
+    """Permite descargar el archivo Jupyter Notebook generado."""
+    ruta = BASE_DIR / "practica_pandas.ipynb"
+    if not ruta.exists():
+        import build_notebook
+        nb = build_notebook.create_notebook()
+        with open(ruta, "w", encoding="utf-8") as f:
+            json.dump(nb, f, indent=2, ensure_ascii=False)
+    return send_file(ruta, as_attachment=True, download_name="practica_pandas.ipynb")
+
+
 @app.route("/api/regenerar", methods=["POST"])
 def api_regenerar():
     """Endpoint para re-ejecutar en caliente el script de análisis."""
