@@ -2,7 +2,7 @@
 ================================================================================
 PRÁCTICA: ANÁLISIS Y VISUALIZACIÓN DE CALIFICACIONES CON PANDAS Y MATPLOTLIB
 Ingeniería en Sistemas Computacionales (ISC)
-Estética Visual: Cyberpunk / Modern Dark (Fondo Negro #0b0b0b, Neón Rojo #ff1e42, Texto Blanco #ffffff)
+Estética Visual: Cyberpunk / Modern Dark (Fondo Negro #08060d, Neón Morado #b026ff, Texto Blanco #ffffff)
 ================================================================================
 """
 
@@ -25,23 +25,23 @@ if sys.stdout.encoding != "utf-8":
 
 def aplicar_estilo_cyberpunk():
     """
-    Aplica la paleta Cyberpunk Dark / Red Neon a Matplotlib:
+    Aplica la paleta Cyberpunk Dark / Purple Neon a Matplotlib:
     - Fondo profundo: #0b0b0b (figura) y #111115 (ejes)
-    - Acentos y bordes: Rojo Neón (#ff1e42 / #ff0055)
+    - Acentos y bordes: Rojo Neón (#b026ff / #ff0055)
     - Textos y etiquetas: Blanco Puro (#ffffff)
-    - Rejilla: Tenue carmesí neón con baja opacidad (#ff1e42 con alpha)
+    - Rejilla: Tenue carmesí neón con baja opacidad (#b026ff con alpha)
     """
     plt.style.use("dark_background")
     plt.rcParams.update({
-        "figure.facecolor": "#0b0b0b",
-        "axes.facecolor": "#111116",
-        "axes.edgecolor": "#ff1e42",
+        "figure.facecolor": "#08060d",
+        "axes.facecolor": "#0f0c18",
+        "axes.edgecolor": "#b026ff",
         "axes.linewidth": 1.4,
         "axes.labelcolor": "#ffffff",
         "xtick.color": "#ffffff",
         "ytick.color": "#ffffff",
         "text.color": "#ffffff",
-        "grid.color": "#ff1e42",
+        "grid.color": "#b026ff",
         "grid.alpha": 0.18,
         "grid.linestyle": "--",
         "font.family": "sans-serif",
@@ -242,11 +242,11 @@ def main():
     materias_nombres = prom_materia.index.tolist()
     materias_valores = prom_materia.values.tolist()
 
-    # Barras en rojo neón (#ff1e42) con bordes iluminados
+    # Barras en rojo neón (#b026ff) con bordes iluminados
     barras = ax1.bar(
         materias_nombres,
         materias_valores,
-        color="#ff1e42",
+        color="#b026ff",
         edgecolor="#ffffff",
         linewidth=1.2,
         width=0.55,
@@ -258,7 +258,7 @@ def main():
     ax1.set_ylim(0, 100)
     ax1.set_ylabel("Calificación Promedio (0 - 100)", color="#ffffff", fontweight="bold")
     ax1.set_title("PROMEDIO GENERAL POR MATERIA // ISC", color="#ffffff", fontweight="bold", pad=15)
-    ax1.grid(axis="y", linestyle="--", alpha=0.3, color="#ff1e42", zorder=0)
+    ax1.grid(axis="y", linestyle="--", alpha=0.3, color="#b026ff", zorder=0)
 
     # Etiquetas de valor sobre cada barra
     for barra in barras:
@@ -276,7 +276,7 @@ def main():
 
     # Línea de referencia de aprobación mínima (70)
     ax1.axhline(70, color="#ffffff", linestyle=":", linewidth=1.5, alpha=0.75, label="Mínimo Aprobatorio (70)")
-    ax1.legend(loc="lower right", facecolor="#111116", edgecolor="#ff1e42", labelcolor="#ffffff")
+    ax1.legend(loc="lower right", facecolor="#120e1d", edgecolor="#b026ff", labelcolor="#ffffff")
 
     guardar_grafico(fig1, "promedio_materias.png", directorio_base)
 
@@ -290,7 +290,7 @@ def main():
         df["calificacion"],
         bins=12,
         range=(40, 100),
-        color="#ff1e42",
+        color="#b026ff",
         edgecolor="#ffffff",
         linewidth=1.2,
         alpha=0.88,
@@ -300,10 +300,10 @@ def main():
     # Resaltar en tono más oscuro o carmesí las calificaciones reprobatorias
     for patch, bin_izq in zip(patches, bins[:-1]):
         if bin_izq < 70:
-            patch.set_facecolor("#8a0f24")  # Rojo oscuro para reprobados
-            patch.set_edgecolor("#ff1e42")
+            patch.set_facecolor("#4a0e68")  # Rojo oscuro para reprobados
+            patch.set_edgecolor("#b026ff")
         else:
-            patch.set_facecolor("#ff1e42")  # Neón brillante para aprobados
+            patch.set_facecolor("#b026ff")  # Neón brillante para aprobados
             patch.set_edgecolor("#ffffff")
 
     # Línea vertical punteada roja/blanca en 70 (corte de aprobación)
@@ -319,8 +319,8 @@ def main():
     ax2.set_xlabel("Rango de Calificación", color="#ffffff", fontweight="bold")
     ax2.set_ylabel("Frecuencia (Cantidad de Registros)", color="#ffffff", fontweight="bold")
     ax2.set_title("DISTRIBUCIÓN DE CALIFICACIONES // CORTE DE APROBACIÓN", color="#ffffff", fontweight="bold", pad=15)
-    ax2.grid(axis="y", linestyle="--", alpha=0.3, color="#ff1e42", zorder=0)
-    ax2.legend(loc="upper left", facecolor="#111116", edgecolor="#ff1e42", labelcolor="#ffffff")
+    ax2.grid(axis="y", linestyle="--", alpha=0.3, color="#b026ff", zorder=0)
+    ax2.legend(loc="upper left", facecolor="#120e1d", edgecolor="#b026ff", labelcolor="#ffffff")
 
     guardar_grafico(fig2, "histograma.png", directorio_base)
 
@@ -334,10 +334,10 @@ def main():
 
     # Paleta de colores neón complementaria manteniendo protagonismo de rojo neón
     colores_materias = {
-        "Programacion": "#ff1e42",          # Neón Red primario
-        "Bases de datos": "#ff6b8b",        # Coral Rosado Neón
+        "Programacion": "#b026ff",          # Neón Red primario
+        "Bases de datos": "#d946ef",        # Coral Rosado Neón
         "Redes": "#ffffff",                 # Blanco Neón Puro
-        "Matematicas discretas": "#c40030"  # Carmesí Profundo Neón
+        "Matematicas discretas": "#8b5cf6"  # Carmesí Profundo Neón
     }
 
     marcadores = {
@@ -348,7 +348,7 @@ def main():
     }
 
     for materia in evolucion_materias.columns:
-        color_linea = colores_materias.get(materia, "#ff1e42")
+        color_linea = colores_materias.get(materia, "#b026ff")
         marcador = marcadores.get(materia, "o")
         ax3.plot(
             evolucion_materias.index,
@@ -381,8 +381,8 @@ def main():
     ax3.set_xlabel("Unidad Académica", color="#ffffff", fontweight="bold")
     ax3.set_ylabel("Calificación Promedio", color="#ffffff", fontweight="bold")
     ax3.set_title("TENDENCIA DE RENDIMIENTO POR UNIDAD // MATERIAS ISC", color="#ffffff", fontweight="bold", pad=15)
-    ax3.grid(True, linestyle="--", alpha=0.3, color="#ff1e42", zorder=0)
-    ax3.legend(loc="lower left", facecolor="#111116", edgecolor="#ff1e42", labelcolor="#ffffff")
+    ax3.grid(True, linestyle="--", alpha=0.3, color="#b026ff", zorder=0)
+    ax3.legend(loc="lower left", facecolor="#120e1d", edgecolor="#b026ff", labelcolor="#ffffff")
 
     guardar_grafico(fig3, "tendencia_unidades.png", directorio_base)
 

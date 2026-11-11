@@ -1,7 +1,7 @@
-# 🔴 PRÁCTICA: ANÁLISIS Y VISUALIZACIÓN DE CALIFICACIONES CON PANDAS Y MATPLOTLIB
+# 🟣 PRÁCTICA: ANÁLISIS Y VISUALIZACIÓN DE CALIFICACIONES CON PANDAS Y MATPLOTLIB
 ### Ingeniería en Sistemas Computacionales (ISC) — Tópicos Avanzados de Programación
-> **Estética Visual:** Cyberpunk / Modern Dark  
-> **Paleta Cromática:** Fondo Negro Profundo (`#070709` / `#0b0b0b`), Acentos Neón Rojo (`#ff1e42` / `#ff0055`) y Textos Blanco Puro (`#ffffff`).
+> **Estética Visual:** Cyberpunk / Modern Dark (Neon Purple Edition)  
+> **Paleta Cromática:** Fondo Negro Profundo (`#07060a` / `#08060d`), Acentos Neón Morado (`#b026ff` / `#d946ef`) y Textos Blanco Puro (`#ffffff`).
 
 ---
 

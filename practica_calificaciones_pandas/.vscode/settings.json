@@ -9,9 +9,9 @@
     "jupyter.notebookFileRoot": "${workspaceFolder}",
     "notebook.output.textLineLimit": 100,
     "workbench.colorCustomizations": {
-        "activityBar.activeBorder": "#ff1e42",
-        "activityBarBadge.background": "#ff1e42",
-        "titleBar.activeBackground": "#070709",
+        "activityBar.activeBorder": "#b026ff",
+        "activityBarBadge.background": "#b026ff",
+        "titleBar.activeBackground": "#08060d",
         "titleBar.activeForeground": "#ffffff"
     }
 }

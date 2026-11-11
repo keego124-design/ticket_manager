@@ -13,15 +13,15 @@
             --bg-deep: #070709;
             --bg-card: #0f0f14;
             --bg-card-hover: #16161f;
-            --neon-red: #ff1e42;
-            --neon-red-glow: rgba(255, 30, 66, 0.45);
-            --neon-red-soft: rgba(255, 30, 66, 0.15);
-            --neon-coral: #ff5e7e;
+            --neon-purple: #b026ff;
+            --neon-purple-glow: rgba(176, 38, 255, 0.45);
+            --neon-purple-soft: rgba(176, 38, 255, 0.15);
+            --neon-lavender: #c084fc;
             --text-pure: #ffffff;
             --text-muted: #a0a0b0;
             --border-glow: #ff1e42;
-            --border-subtle: #261219;
-            --badge-risk: #ff1e42;
+            --border-subtle: #2b183d;
+            --badge-risk: #d946ef;
             --badge-ok: #00e5a3;
         }
 
@@ -38,8 +38,8 @@
             min-height: 100vh;
             line-height: 1.6;
             background-image: 
-                radial-gradient(circle at 15% 15%, rgba(255, 30, 66, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 85% 85%, rgba(255, 30, 66, 0.05) 0%, transparent 45%);
+                radial-gradient(circle at 15% 15%, rgba(176, 38, 255, 0.10) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(176, 38, 255, 0.06) 0%, transparent 45%);
             background-attachment: fixed;
         }
 
@@ -47,8 +47,8 @@
         header {
             background: rgba(11, 11, 15, 0.92);
             backdrop-filter: blur(12px);
-            border-bottom: 2px solid var(--neon-red);
-            box-shadow: 0 4px 25px var(--neon-red-glow);
+            border-bottom: 2px solid var(--neon-purple);
+            box-shadow: 0 4px 25px var(--neon-purple-glow);
             padding: 1.2rem 2.5rem;
             position: sticky;
             top: 0;
@@ -73,22 +73,22 @@
             width: 12px;
             height: 12px;
             border-radius: 50%;
-            background-color: var(--neon-red);
-            box-shadow: 0 0 12px var(--neon-red);
+            background-color: var(--neon-purple);
+            box-shadow: 0 0 12px var(--neon-purple);
             animation: pulse-glow 2s infinite ease-in-out;
         }
 
         @keyframes pulse-glow {
-            0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 14px var(--neon-red); }
-            50% { opacity: 0.6; transform: scale(0.9); box-shadow: 0 0 6px var(--neon-red); }
+            0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 14px var(--neon-purple); }
+            50% { opacity: 0.6; transform: scale(0.9); box-shadow: 0 0 6px var(--neon-purple); }
         }
 
         .status-pill {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: var(--neon-red-soft);
-            border: 1px solid var(--neon-red);
+            background: var(--neon-purple-soft);
+            border: 1px solid var(--neon-purple);
             padding: 6px 14px;
             border-radius: 20px;
             font-family: 'Orbitron', monospace;
@@ -108,7 +108,7 @@
         /* HERO BANNER */
         .hero {
             margin-bottom: 2.5rem;
-            border-left: 4px solid var(--neon-red);
+            border-left: 4px solid var(--neon-purple);
             padding-left: 1.5rem;
         }
 
@@ -121,8 +121,8 @@
         }
 
         .hero h1 span {
-            color: var(--neon-red);
-            text-shadow: 0 0 15px var(--neon-red);
+            color: var(--neon-purple);
+            text-shadow: 0 0 15px var(--neon-purple);
         }
 
         .hero p {
@@ -141,7 +141,7 @@
         .kpi-card {
             background: var(--bg-card);
             border: 1px solid var(--border-subtle);
-            border-top: 3px solid var(--neon-red);
+            border-top: 3px solid var(--neon-purple);
             padding: 1.5rem;
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
@@ -150,8 +150,8 @@
 
         .kpi-card:hover {
             transform: translateY(-4px);
-            border-color: var(--neon-red);
-            box-shadow: 0 8px 25px var(--neon-red-glow);
+            border-color: var(--neon-purple);
+            box-shadow: 0 8px 25px var(--neon-purple-glow);
         }
 
         .kpi-title {
@@ -172,8 +172,8 @@
         }
 
         .kpi-value.accent {
-            color: var(--neon-red);
-            text-shadow: 0 0 12px var(--neon-red);
+            color: var(--neon-purple);
+            text-shadow: 0 0 12px var(--neon-purple);
         }
 
         .kpi-sub {
@@ -202,7 +202,7 @@
 
         .section-header h2::before {
             content: "//";
-            color: var(--neon-red);
+            color: var(--neon-purple);
             font-weight: 900;
         }
 
@@ -226,8 +226,8 @@
         }
 
         .chart-card:hover {
-            border-color: var(--neon-red);
-            box-shadow: 0 0 20px var(--neon-red-glow);
+            border-color: var(--neon-purple);
+            box-shadow: 0 0 20px var(--neon-purple-glow);
         }
 
         .chart-header {
@@ -247,11 +247,11 @@
         .chart-tag {
             font-family: 'Orbitron', monospace;
             font-size: 0.7rem;
-            background: var(--neon-red-soft);
-            color: var(--neon-red);
+            background: var(--neon-purple-soft);
+            color: var(--neon-purple);
             padding: 3px 8px;
             border-radius: 4px;
-            border: 1px solid var(--neon-red);
+            border: 1px solid var(--neon-purple);
         }
 
         .chart-img-wrap {
@@ -319,7 +319,7 @@
 
         .control-group select, .control-group input {
             background: #09090d;
-            border: 1px solid #331520;
+            border: 1px solid #3b1852;
             color: var(--text-pure);
             padding: 10px 14px;
             border-radius: 6px;
@@ -330,12 +330,12 @@
         }
 
         .control-group select:focus, .control-group input:focus {
-            border-color: var(--neon-red);
-            box-shadow: 0 0 10px var(--neon-red-glow);
+            border-color: var(--neon-purple);
+            box-shadow: 0 0 10px var(--neon-purple-glow);
         }
 
         .btn-cyber {
-            background: var(--neon-red);
+            background: var(--neon-purple);
             color: #ffffff;
             font-family: 'Orbitron', monospace;
             font-size: 0.85rem;
@@ -346,7 +346,7 @@
             border: none;
             border-radius: 6px;
             cursor: pointer;
-            box-shadow: 0 0 15px var(--neon-red-glow);
+            box-shadow: 0 0 15px var(--neon-purple-glow);
             transition: background-color 0.2s, transform 0.15s, box-shadow 0.2s;
             display: inline-flex;
             align-items: center;
@@ -354,8 +354,8 @@
         }
 
         .btn-cyber:hover {
-            background: #ff3355;
-            box-shadow: 0 0 25px var(--neon-red);
+            background: #c040ff;
+            box-shadow: 0 0 25px var(--neon-purple);
             transform: translateY(-2px);
         }
 
@@ -365,14 +365,14 @@
 
         .btn-secondary {
             background: transparent;
-            border: 1px solid var(--neon-red);
+            border: 1px solid var(--neon-purple);
             color: var(--text-pure);
             box-shadow: none;
         }
 
         .btn-secondary:hover {
-            background: var(--neon-red-soft);
-            box-shadow: 0 0 15px var(--neon-red-glow);
+            background: var(--neon-purple-soft);
+            box-shadow: 0 0 15px var(--neon-purple-glow);
         }
 
         /* DATA TABLES */
@@ -393,7 +393,7 @@
 
         thead {
             background: #12121a;
-            border-bottom: 2px solid var(--neon-red);
+            border-bottom: 2px solid var(--neon-purple);
         }
 
         th {
@@ -412,7 +412,7 @@
         }
 
         tbody tr:hover {
-            background-color: rgba(255, 30, 66, 0.06);
+            background-color: rgba(176, 38, 255, 0.08);
         }
 
         .badge-status {
@@ -433,10 +433,10 @@
         }
 
         .badge-risk {
-            background: var(--neon-red-soft);
-            color: var(--neon-red);
-            border: 1px solid var(--neon-red);
-            box-shadow: 0 0 8px var(--neon-red-glow);
+            background: var(--neon-purple-soft);
+            color: var(--neon-purple);
+            border: 1px solid var(--neon-purple);
+            box-shadow: 0 0 8px var(--neon-purple-glow);
         }
 
         /* EXERCISE 6 INTERPRETATION CARDS */
@@ -450,7 +450,7 @@
         .interpret-card {
             background: var(--bg-card);
             border: 1px solid var(--border-subtle);
-            border-left: 4px solid var(--neon-red);
+            border-left: 4px solid var(--neon-purple);
             padding: 1.5rem;
             border-radius: 6px;
         }
@@ -458,7 +458,7 @@
         .interpret-num {
             font-family: 'Orbitron', monospace;
             font-size: 0.8rem;
-            color: var(--neon-red);
+            color: var(--neon-purple);
             font-weight: 700;
             margin-bottom: 0.4rem;
         }
@@ -513,8 +513,8 @@
         .modal-content {
             max-width: 90%;
             max-height: 90vh;
-            border: 2px solid var(--neon-red);
-            box-shadow: 0 0 35px var(--neon-red-glow);
+            border: 2px solid var(--neon-purple);
+            box-shadow: 0 0 35px var(--neon-purple-glow);
             border-radius: 8px;
         }
 
@@ -522,7 +522,7 @@
             position: absolute;
             top: 25px;
             right: 35px;
-            color: var(--neon-red);
+            color: var(--neon-purple);
             font-size: 2.5rem;
             font-weight: bold;
             cursor: pointer;
@@ -718,7 +718,7 @@
             </div>
 
             <div style="margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center;">
-                <span id="filtroContador" style="font-family: 'Orbitron', monospace; font-size: 0.85rem; color: var(--neon-red);">
+                <span id="filtroContador" style="font-family: 'Orbitron', monospace; font-size: 0.85rem; color: var(--neon-purple);">
                     Mostrando 288 registros coincidentes
                 </span>
             </div>
@@ -761,7 +761,7 @@
             <div style="margin-bottom: 1.2rem; display: flex; gap: 15px; align-items: center; justify-content: space-between;">
                 <input type="text" id="busquedaAlumno" placeholder="🔍 Buscar por nombre o matrícula..." 
                        oninput="filtrarTablaAlumnos()" 
-                       style="background: #09090d; border: 1px solid #331520; color: #fff; padding: 10px 14px; border-radius: 6px; width: 340px;">
+                       style="background: #09090d; border: 1px solid #3b1852; color: #fff; padding: 10px 14px; border-radius: 6px; width: 340px;">
                 <span style="font-family: 'Orbitron', monospace; font-size: 0.8rem; color: var(--text-muted);">
                     Ordenado por Promedio Descendente
                 </span>
@@ -785,15 +785,15 @@
                         {% for a in alumnos %}
                         <tr class="fila-alumno" data-nombre="{{ a.nombre|lower }}" data-mat="{{ a.matricula|lower }}">
                             <td style="font-family: 'Orbitron', monospace;">{{ loop.index }}</td>
-                            <td style="font-family: 'Orbitron', monospace; font-weight: bold; color: var(--neon-coral);">{{ a.matricula }}</td>
+                            <td style="font-family: 'Orbitron', monospace; font-weight: bold; color: var(--neon-lavender);">{{ a.matricula }}</td>
                             <td>{{ a.nombre }}</td>
                             <td style="text-align: center;"><span class="badge-status" style="background:#181824;">{{ a.grupo }}</span></td>
-                            <td style="font-weight: 700; font-size: 1rem; color: {% if a.promedio_calificacion < 70 %}var(--neon-red){% else %}#ffffff{% endif %};">
+                            <td style="font-weight: 700; font-size: 1rem; color: {% if a.promedio_calificacion < 70 %}var(--neon-purple){% else %}#ffffff{% endif %};">
                                 {{ a.promedio_calificacion }}
                             </td>
                             <td>{{ a.promedio_asistencias }} / 30</td>
                             <td style="color: #00e5a3; font-weight: 600;">{{ a.unidades_aprobadas }}</td>
-                            <td style="color: {% if a.unidades_reprobadas > 0 %}var(--neon-red){% else %}#888{% endif %}; font-weight: 600;">
+                            <td style="color: {% if a.unidades_reprobadas > 0 %}var(--neon-purple){% else %}#888{% endif %}; font-weight: 600;">
                                 {{ a.unidades_reprobadas }}
                             </td>
                             <td>
@@ -850,12 +850,12 @@
                     : `<span class="badge-status badge-risk">Reprobado</span>`;
                 
                 tr.innerHTML = `
-                    <td style="font-family: 'Orbitron', monospace; color: var(--neon-coral);">${f.matricula}</td>
+                    <td style="font-family: 'Orbitron', monospace; color: var(--neon-lavender);">${f.matricula}</td>
                     <td>${f.nombre}</td>
                     <td style="text-align: center;">${f.grupo}</td>
                     <td>${f.materia}</td>
                     <td style="text-align: center;">U${f.unidad}</td>
-                    <td style="font-weight: 700; color: ${f.calificacion < 70 ? 'var(--neon-red)' : '#ffffff'};">${f.calificacion}</td>
+                    <td style="font-weight: 700; color: ${f.calificacion < 70 ? 'var(--neon-purple)' : '#ffffff'};">${f.calificacion}</td>
                     <td>${f.asistencias}</td>
                     <td>${badge}</td>
                 `;
