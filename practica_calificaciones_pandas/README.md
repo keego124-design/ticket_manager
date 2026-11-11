@@ -20,6 +20,7 @@ practica_calificaciones_pandas/
 │
 ├── calificaciones_isc.csv         # Dataset principal con exactamente 288 observaciones
 ├── promedios_alumnos.csv          # Archivo CSV exportado con promedios por alumno
+├── practica_pandas.ipynb          # Jupyter Notebook interactivo con los 6 Ejercicios y gráficos
 ├── generate_dataset.py            # Generador determinista del dataset académico
 ├── practica_pandas.py             # Script principal con los 6 Ejercicios resueltos
 ├── app.py                         # Servidor Flask con Dashboard Web interactivo
@@ -88,6 +89,16 @@ python app.py
 
 Abra su navegador web en la dirección:
 👉 **`http://127.0.0.1:5000/`**
+
+---
+
+### Opción C: Abrir y Ejecutar el Jupyter Notebook Interactivo
+Para explorar el análisis celda por celda en **Visual Studio Code** o **JupyterLab**:
+
+1. En Visual Studio Code, abra el archivo:
+   👉 **`practica_pandas.ipynb`**
+2. Haga clic en el botón superior **"Run All"** (Ejecutar todo) o ejecute cada celda individualmente con `Shift + Enter`.
+3. Podrá visualizar interactivamente las tablas de datos, los filtros vectorizados, la distribución de calificaciones y las tres gráficas Cyberpunk directamente renderizadas en el notebook.
 
 ---
 
