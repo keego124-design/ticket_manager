@@ -6,6 +6,8 @@
         "PYTHONIOENCODING": "utf-8"
     },
     "python.analysis.typeCheckingMode": "basic",
+    "jupyter.notebookFileRoot": "${workspaceFolder}",
+    "notebook.output.textLineLimit": 100,
     "workbench.colorCustomizations": {
         "activityBar.activeBorder": "#ff1e42",
         "activityBarBadge.background": "#ff1e42",
