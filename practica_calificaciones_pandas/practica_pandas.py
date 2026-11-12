@@ -1,7 +1,7 @@
 """
 ================================================================================
 PRÁCTICA: ANÁLISIS Y VISUALIZACIÓN DE CALIFICACIONES CON PANDAS Y MATPLOTLIB
-Ingeniería en Sistemas Computacionales (ISC)
+Ingeniería en Sistemas Computacionales (ISC) — Tópicos Avanzados de Programación
 Estética Visual: Cyberpunk / Modern Dark (Fondo Negro #08060d, Neón Morado #b026ff, Texto Blanco #ffffff)
 ================================================================================
 """
@@ -11,7 +11,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import matplotlib
-# Configurar backend no interactivo para asegurar generación limpia y portable de gráficos
+# Backend no interactivo para guardado limpio y compatible en cualquier entorno
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
@@ -22,14 +22,18 @@ if sys.stdout.encoding != "utf-8":
     except Exception:
         pass
 
+# Constantes iniciales
+DIRECTORIO_BASE = Path(__file__).resolve().parent
+RUTA_CSV = DIRECTORIO_BASE / "calificaciones_isc.csv"
+
 
 def aplicar_estilo_cyberpunk():
     """
     Aplica la paleta Cyberpunk Dark / Purple Neon a Matplotlib:
-    - Fondo profundo: #0b0b0b (figura) y #111115 (ejes)
-    - Acentos y bordes: Rojo Neón (#b026ff / #ff0055)
+    - Fondo profundo: #08060d (figura) y #0f0c18 (ejes)
+    - Acentos y bordes: Morado Neón (#b026ff)
     - Textos y etiquetas: Blanco Puro (#ffffff)
-    - Rejilla: Tenue carmesí neón con baja opacidad (#b026ff con alpha)
+    - Rejilla: Tenue morado neón con baja opacidad (#b026ff con alpha 0.18)
     """
     plt.style.use("dark_background")
     plt.rcParams.update({
@@ -67,17 +71,10 @@ def guardar_grafico(fig, nombre_archivo: str, directorio_base: Path):
     plt.close(fig)
 
 
-def main():
-    directorio_base = Path(__file__).resolve().parent
-    ruta_csv = directorio_base / "calificaciones_isc.csv"
-
-    print("=" * 80)
-    print(" SISTEMA DE ANÁLISIS DE CALIFICACIONES ISC - PANDAS & MATPLOTLIB [CYBERPUNK]")
-    print("=" * 80)
-
-    # =========================================================================
-    # EJERCICIO 1: Carga y Exploración Inicial del Dataset
-    # =========================================================================
+def ejercicio_1_carga_y_revision(ruta_csv: Path) -> pd.DataFrame:
+    """
+    EJERCICIO 1: Carga y Exploración Inicial del Dataset
+    """
     print("\n" + "#" * 60)
     print(" EJERCICIO 1: CARGA Y REVISIÓN INICIAL")
     print("#" * 60)
@@ -101,29 +98,18 @@ def main():
     print("\n--> Estadísticas descriptivas de 'calificacion' y 'asistencias' (df.describe()):")
     print(df[["calificacion", "asistencias"]].describe().round(2))
 
-    # -------------------------------------------------------------------------
-    # EXPLICACIÓN TEÓRICA DE LA ESTRUCTURA DEL DATASET:
-    # ¿Por qué el archivo tiene exactamente 288 filas en lugar de 24?
-    #
-    # En este diseño de datos relacional/tabular en formato largo ("tidy data"):
-    # Cada fila representa una observación unitaria: la calificación obtenida por
-    # UN alumno específico en UNA unidad específica de UNA materia determinada.
-    # El cálculo matemático exacto es:
-    #   24 estudiantes (12 Grupo A + 12 Grupo B)
-    #   × 4 materias ("Programacion", "Bases de datos", "Redes", "Matematicas discretas")
-    #   × 3 unidades evaluativas por materia
-    #   = 24 × 4 × 3 = 288 registros.
-    # Si tuviera 24 filas, tendría que estar en formato ancho ("wide format") con
-    # 12 columnas de calificaciones (4 materias × 3 unidades), lo cual dificulta
-    # agregaciones, filtros vectorizados y análisis temporal por unidad.
-    # -------------------------------------------------------------------------
+    # Explicación teórica de la estructura en formato largo (tidy data)
     print("\n[NOTA DE ANÁLISIS - EXPLICACIÓN DE DIMENSIONES]")
     print("  El dataset contiene 288 registros y no 24 porque está estructurado en formato")
     print("  largo ('tidy/long format'): 24 estudiantes x 4 materias x 3 unidades = 288 observaciones.")
 
-    # =========================================================================
-    # EJERCICIO 2: Filtros Vectorizados (Sin bucles for)
-    # =========================================================================
+    return df
+
+
+def ejercicio_2_filtros_vectorizados(df: pd.DataFrame):
+    """
+    EJERCICIO 2: Filtros Vectorizados (Sin bucles for)
+    """
     print("\n" + "#" * 60)
     print(" EJERCICIO 2: FILTROS VECTORIZADOS (SIN BUCLES)")
     print("#" * 60)
@@ -153,9 +139,13 @@ def main():
     print("    Detalle de registros encontrados:")
     print(filtro_bd_b_80[["matricula", "nombre", "unidad", "calificacion"]].to_string(index=False))
 
-    # =========================================================================
-    # EJERCICIO 3: Creación de Columna Calculada con np.where (Vectorizado)
-    # =========================================================================
+    return filtro_grupo_a, filtro_reprobados, filtro_bd_b_80
+
+
+def ejercicio_3_columna_calculada(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    EJERCICIO 3: Creación de Columna Calculada con np.where (Vectorizado)
+    """
     print("\n" + "#" * 60)
     print(" EJERCICIO 3: COLUMNA CALCULADA 'situacion' (np.where)")
     print("#" * 60)
@@ -172,9 +162,13 @@ def main():
         porcentaje = (cuenta / len(df)) * 100
         print(f"    * {sit}: {cuenta} registros ({porcentaje:.2f}%)")
 
-    # =========================================================================
-    # EJERCICIO 4: Agrupaciones, Resúmenes y Exportación a CSV
-    # =========================================================================
+    return df
+
+
+def ejercicio_4_resumenes_y_exportacion(df: pd.DataFrame, directorio_base: Path):
+    """
+    EJERCICIO 4: Agrupaciones, Resúmenes y Exportación a CSV
+    """
     print("\n" + "#" * 60)
     print(" EJERCICIO 4: RESÚMENES ESTADÍSTICOS Y EXPORTACIÓN")
     print("#" * 60)
@@ -189,8 +183,7 @@ def main():
     print("\n--> 4.2 Promedio por Grupo y Materia:")
     print(prom_grupo_materia.to_string())
 
-    # 4.3 Promedio general por alumno ordenado de mayor a menor
-    # Preservando matrícula y nombre
+    # 4.3 Promedio general por alumno ordenado de mayor a menor (preservando matrícula y nombre)
     prom_alumnos = (
         df.groupby(["matricula", "nombre", "grupo"])
         .agg(
@@ -226,9 +219,13 @@ def main():
     print(f"\n--> Archivo exportado exitosamente: {ruta_promedios_csv}")
     print("    Columnas incluidas:", list(prom_alumnos.columns))
 
-    # =========================================================================
-    # EJERCICIO 5: Visualización de Datos con Estética Cyberpunk Dark / Neon Red
-    # =========================================================================
+    return prom_materia, prom_grupo_materia, prom_alumnos, prom_unidad
+
+
+def ejercicio_5_generacion_graficos(df: pd.DataFrame, prom_materia: pd.Series, directorio_base: Path):
+    """
+    EJERCICIO 5: Visualización de Datos con Estética Cyberpunk Dark / Purple Neon
+    """
     print("\n" + "#" * 60)
     print(" EJERCICIO 5: GENERACIÓN DE GRÁFICOS (CYBERPUNK THEME)")
     print("#" * 60)
@@ -242,7 +239,7 @@ def main():
     materias_nombres = prom_materia.index.tolist()
     materias_valores = prom_materia.values.tolist()
 
-    # Barras en rojo neón (#b026ff) con bordes iluminados
+    # Barras en morado neón (#b026ff) con bordes iluminados
     barras = ax1.bar(
         materias_nombres,
         materias_valores,
@@ -254,7 +251,6 @@ def main():
         zorder=3
     )
 
-    # Añadir resplandor o sombra tenue en las barras
     ax1.set_ylim(0, 100)
     ax1.set_ylabel("Calificación Promedio (0 - 100)", color="#ffffff", fontweight="bold")
     ax1.set_title("PROMEDIO GENERAL POR MATERIA // ISC", color="#ffffff", fontweight="bold", pad=15)
@@ -285,7 +281,6 @@ def main():
     # -------------------------------------------------------------------------
     fig2, ax2 = plt.subplots(figsize=(9, 5.5), dpi=300)
 
-    # Bins de tamaño 5 para ver la distribución clara
     n, bins, patches = ax2.hist(
         df["calificacion"],
         bins=12,
@@ -297,16 +292,16 @@ def main():
         zorder=3
     )
 
-    # Resaltar en tono más oscuro o carmesí las calificaciones reprobatorias
+    # Resaltar en tono más oscuro las calificaciones reprobatorias
     for patch, bin_izq in zip(patches, bins[:-1]):
         if bin_izq < 70:
-            patch.set_facecolor("#4a0e68")  # Rojo oscuro para reprobados
+            patch.set_facecolor("#4a0e68")  # Morado oscuro para reprobados
             patch.set_edgecolor("#b026ff")
         else:
             patch.set_facecolor("#b026ff")  # Neón brillante para aprobados
             patch.set_edgecolor("#ffffff")
 
-    # Línea vertical punteada roja/blanca en 70 (corte de aprobación)
+    # Línea vertical punteada blanca en 70 (corte de aprobación)
     ax2.axvline(
         70,
         color="#ffffff",
@@ -332,12 +327,11 @@ def main():
     # Agrupar por materia y unidad
     evolucion_materias = df.groupby(["materia", "unidad"])["calificacion"].mean().unstack(level=0)
 
-    # Paleta de colores neón complementaria manteniendo protagonismo de rojo neón
     colores_materias = {
-        "Programacion": "#b026ff",          # Neón Red primario
-        "Bases de datos": "#d946ef",        # Coral Rosado Neón
+        "Programacion": "#b026ff",          # Neón Purple primario
+        "Bases de datos": "#d946ef",        # Fuchsia Neón
         "Redes": "#ffffff",                 # Blanco Neón Puro
-        "Matematicas discretas": "#8b5cf6"  # Carmesí Profundo Neón
+        "Matematicas discretas": "#8b5cf6"  # Amatista Neón
     }
 
     marcadores = {
@@ -361,7 +355,6 @@ def main():
             zorder=3
         )
 
-        # Mostrar valores numéricos en los puntos
         for u in evolucion_materias.index:
             val = evolucion_materias.loc[u, materia]
             ax3.annotate(
@@ -386,9 +379,13 @@ def main():
 
     guardar_grafico(fig3, "tendencia_unidades.png", directorio_base)
 
-    # =========================================================================
-    # EJERCICIO 6: Interpretación y Preguntas de Análisis
-    # =========================================================================
+    return fig1, fig2, fig3
+
+
+def ejercicio_6_interpretacion(prom_materia: pd.Series, prom_unidad: pd.Series, prom_alumnos: pd.DataFrame):
+    """
+    EJERCICIO 6: Interpretación y Preguntas de Análisis
+    """
     print("\n" + "#" * 60)
     print(" EJERCICIO 6: INTERPRETACIÓN DE RESULTADOS")
     print("#" * 60)
@@ -422,6 +419,33 @@ def main():
     print("      Lista detallada de estudiantes en riesgo:")
     for _, fila in alumnos_en_riesgo.iterrows():
         print(f"      - Matrícula: {fila['matricula']} | {fila['nombre']} (Grupo {fila['grupo']}): {fila['promedio_calificacion']:.2f} pts")
+
+
+def main():
+    directorio_base = DIRECTORIO_BASE
+    ruta_csv = RUTA_CSV
+
+    print("=" * 80)
+    print(" SISTEMA DE ANÁLISIS DE CALIFICACIONES ISC - PANDAS & MATPLOTLIB [CYBERPUNK]")
+    print("=" * 80)
+
+    # 1. Carga y revisión inicial
+    df = ejercicio_1_carga_y_revision(ruta_csv)
+
+    # 2. Filtros vectorizados
+    ejercicio_2_filtros_vectorizados(df)
+
+    # 3. Columna calculada 'situacion'
+    df = ejercicio_3_columna_calculada(df)
+
+    # 4. Resúmenes y exportación a CSV
+    prom_materia, prom_grupo_materia, prom_alumnos, prom_unidad = ejercicio_4_resumenes_y_exportacion(df, directorio_base)
+
+    # 5. Generación de gráficos Cyberpunk
+    ejercicio_5_generacion_graficos(df, prom_materia, directorio_base)
+
+    # 6. Interpretación de resultados
+    ejercicio_6_interpretacion(prom_materia, prom_unidad, prom_alumnos)
 
     print("\n" + "=" * 80)
     print(" [OK] EJECUCIÓN COMPLETA Y EXITOSA DE TODOS LOS EJERCICIOS (1 AL 6)")
